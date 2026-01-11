@@ -5,3 +5,4 @@ pandas
 numpy
 lightgbm
 tqdm
+fastapi
