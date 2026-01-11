@@ -44,7 +44,7 @@ This step processes the raw player event data into a format ready for training.
   ```bash
   python src/prepare_data.py
   ```
-- **Output**: This will generate `X_train.npy`, `y_train.npy`, `groups_train.npy` and corresponding holdout set files in the directory specified by `OUTPUT_DIR` in the configuration.
+- **Output**: This will generate `X_train.npy`, `y_train.npy`, `groups_train.npy` and corresponding holdout set files in the directory specified by `DATA_DIR` in the configuration.
 
 ### 2. Train Model
 
@@ -58,7 +58,7 @@ This step uses the prepared data to train and evaluate the LightGBM model.
 - **Output**:
     - The script will train a cross-validated LightGBM model.
     - All parameters, metrics, and model artifacts (for each fold) will be logged to MLflow. You can view the results by running `mlflow ui` in the terminal and navigating to the displayed URL.
-    - Final predictions and feature importances will be saved to the `OUTPUT_DIR`.
+    - Final predictions and feature importances will be saved to the `RESULT_DIR`.
 
 ### 3. Serve Model
 
@@ -66,7 +66,6 @@ This step runs a FastAPI server to serve the trained model for real-time predict
 
 - **Run the server**:
   ```bash
-  cd serve
   uvicorn serve.app:app --reload --host 0.0.0.0 --port 8000
   ```
 - **API Endpoint**: The server provides a `/predict` endpoint that accepts `POST` requests.
