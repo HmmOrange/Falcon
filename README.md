@@ -66,6 +66,7 @@ This step runs a FastAPI server to serve the trained model for real-time predict
 
 - **Run the server**:
   ```bash
+  cd serve
   uvicorn serve.app:app --reload --host 0.0.0.0 --port 8000
   ```
 - **API Endpoint**: The server provides a `/predict` endpoint that accepts `POST` requests.
