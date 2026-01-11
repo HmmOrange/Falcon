@@ -16,7 +16,7 @@ This project trains a LightGBM model to predict player churn at certain game lev
 
 1.  **Clone the repository:**
     ```bash
-    git clone 
+    git clone https://github.com/duon9/Falcon.git
     cd Falcon
     ```
 
