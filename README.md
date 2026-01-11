@@ -59,3 +59,40 @@ This step uses the prepared data to train and evaluate the LightGBM model.
     - The script will train a cross-validated LightGBM model.
     - All parameters, metrics, and model artifacts (for each fold) will be logged to MLflow. You can view the results by running `mlflow ui` in the terminal and navigating to the displayed URL.
     - Final predictions and feature importances will be saved to the `OUTPUT_DIR`.
+
+### 3. Serve Model
+
+This step runs a FastAPI server to serve the trained model for real-time predictions.
+
+- **Run the server**:
+  ```bash
+  uvicorn serve.app:app --reload --host 0.0.0.0 --port 8000
+  ```
+- **API Endpoint**: The server provides a `/predict` endpoint that accepts `POST` requests.
+- **Input Format**: The request body should be a JSON object containing:
+    - `history`: A list of the last 10 game events for a player. Each event must include `status` (float), `duration` (float), and `level` (int).
+    - `target_levels`: A list of future levels for which churn predictions are desired.
+- **Example Request** (`POST /predict`):
+  ```json
+  {
+    "history": [
+      {"status": 1.0, "duration": 120.5, "level": 1},
+      {"status": 1.0, "duration": 150.2, "level": 2},
+      {"status": 0.0, "duration": 300.0, "level": 3},
+      {"status": 1.0, "duration": 180.7, "level": 4},
+      {"status": 1.0, "duration": 210.1, "level": 5},
+      {"status": 1.0, "duration": 195.8, "level": 6},
+      {"status": 0.0, "duration": 400.0, "level": 7},
+      {"status": 1.0, "duration": 250.3, "level": 8},
+      {"status": 1.0, "duration": 280.9, "level": 9},
+      {"status": 1.0, "duration": 300.5, "level": 10}
+    ],
+    "target_levels": [11, 12, 15]
+  }
+  ```
+- **Output**: The server returns a JSON object with a `predictions` key, containing a list of churn probabilities corresponding to the `target_levels`.
+  ```json
+  {
+    "predictions": [0.15, 0.25, 0.6]
+  }
+  ```
