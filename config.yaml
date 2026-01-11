@@ -1,5 +1,5 @@
-INPUT_DIR: "/kaggle/working"
-OUTPUT_DIR: "/kaggle/working/lgbm_out"
+DATA_DIR: "./prepared_data/"
+RESULT_DIR: "./results/"
 
 TRAINING:
   N_SPLITS: 5
@@ -34,8 +34,8 @@ MLFLOW:
   TRACKING_URI: "mlruns"
 
 PREPARE_DATA:
-  INPUT_CSV_PATH: "/kaggle/input/residual2/residual2.csv"
-  MEAN_TIME_PATH: "/kaggle/input/mean-time/mean_time.pkl"
+  INPUT_CSV_PATH: "./data/residual2.csv"
+  MEAN_TIME_PATH: "./data/mean_time.pkl"
   COLUMNS:
     ACCOUNT_ID: "account_id"
     LEVEL_ID: "current_level"

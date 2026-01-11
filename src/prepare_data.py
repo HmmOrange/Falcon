@@ -20,7 +20,7 @@ with open("config.yaml", "r") as f:
     CONFIG = yaml.safe_load(f)
 
 # General Config
-OUTPUT_DIR = CONFIG["OUTPUT_DIR"]
+OUTPUT_DIR = CONFIG["DATA_DIR"]
 SEED = CONFIG["TRAINING"]["SEED"]
 
 # Prepare Data Config

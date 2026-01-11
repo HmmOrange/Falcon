@@ -1,0 +1,8 @@
+# Byte-compiled / optimized / DLL files
+venv/
+mlruns/
+__pycache__/
+
+# Run results
+prepared_data/
+results/

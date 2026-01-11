@@ -19,8 +19,8 @@ import lightgbm as lgb
 with open("config.yaml", "r") as f:
     CONFIG = yaml.safe_load(f)
 
-INPUT_DIR = CONFIG["INPUT_DIR"]
-OUTPUT_DIR = CONFIG["OUTPUT_DIR"]
+INPUT_DIR = CONFIG["DATA_DIR"]
+OUTPUT_DIR = CONFIG["RESULT_DIR"]
 TRAINING_CONFIG = CONFIG["TRAINING"]
 LGB_PARAMS_BASE = CONFIG["LGB_PARAMS"]
 LGB_DEVICE_GPU = CONFIG["LGB_DEVICE"]["GPU"]
@@ -163,7 +163,7 @@ def main():
                 vm = evaluate_probs(y_va, prob_va, thr=THRESHOLD)
                 fold_metrics.append(vm)
                 mlflow.log_metrics({f"cv_{k}": v for k, v in vm.items()})
-                print(f"[Fold {fold_id}] CV AUROC={{vm['AUROC']:.4f}}  F1={{vm['F1']:.4f}}")
+                print(f"[Fold {fold_id}] CV AUROC={vm['AUROC']:.4f}  F1={vm['F1']:.4f}")
 
                 # --- Log Model and Importance ---
                 booster = model.booster_
