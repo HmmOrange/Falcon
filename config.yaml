@@ -1,0 +1,51 @@
+INPUT_DIR: "/kaggle/working"
+OUTPUT_DIR: "/kaggle/working/lgbm_out"
+
+TRAINING:
+  N_SPLITS: 5
+  EARLY_STOP: 200
+  SEED: 42
+  THRESHOLD: 0.5
+
+LGB_PARAMS:
+  objective: "binary"
+  metric: ["auc", "binary_logloss"]
+  learning_rate: 0.03
+  num_leaves: 255
+  max_depth: -1
+  feature_fraction: 0.8
+  bagging_fraction: 0.8
+  bagging_freq: 1
+  min_data_in_leaf: 50
+  lambda_l1: 0.0
+  lambda_l2: 1.0
+  n_estimators: 5000
+  verbosity: -1
+  n_jobs: 4
+
+LGB_DEVICE:
+  GPU:
+    device: "gpu"
+  CPU:
+    device: "cpu"
+
+MLFLOW:
+  EXPERIMENT_NAME: "falcon-training"
+  TRACKING_URI: "mlruns"
+
+PREPARE_DATA:
+  INPUT_CSV_PATH: "/kaggle/input/residual2/residual2.csv"
+  MEAN_TIME_PATH: "/kaggle/input/mean-time/mean_time.pkl"
+  COLUMNS:
+    ACCOUNT_ID: "account_id"
+    LEVEL_ID: "current_level"
+    STATUS: "status"
+    DURATION: "duration_of_each_time"
+  N_CONT_HIST_FEATURES: 2
+  SEQ_LEN: 10
+  SAMPLING:
+    NEG_HISTORY_BACKSHIFT_MIN: 1
+    NEG_HISTORY_BACKSHIFT_MAX: 2
+    TRAIN_NEG_PER_POS: 10 # Use null for all negatives
+  N_WORKERS: -1 # -1 for all available cores, 0 for sequential
+  TRAIN_SPLIT_RATIO: 0.8
